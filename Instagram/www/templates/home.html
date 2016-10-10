@@ -1,0 +1,35 @@
+<ion-view >
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios-plus-outline" ng-click="doSomething()"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-chatboxes" ng-click="doSomething()"></button>
+    </ion-nav-buttons>
+  <ion-nav-title>
+   <img src="img/Logo.png" class="logo">
+  </ion-nav-title>
+
+  <ion-content>
+      <ion-list>
+          <h2 style="text-align:center">Newest Pics:</h2>
+          <div>
+              <div ng-repeat="post in posts">
+                  <div class="item item-avatar users">
+                      <img ng-src="{{post.face}}">
+                      <p>{{post.name}}</p>
+                      <button class="button button-assertive follow" ng-click="doSomething()">Follow</button>
+                  </div>
+                  <img ng-src="{{post.pic}}" class="postpic">
+                  <p class="comments">{{post.comment}}</p>
+                  
+                  <div class="socialbutton">
+                      <a class="button button-icon icon ion-ios-heart-outline"></a>
+                      <a class="button button-icon icon ion-ios-chatbubble-outline"></a>
+                      <a class="button button-icon icon ion-ios-redo-outline"></a>
+                  </div>
+                 
+               </div>
+          </div>
+      </ion-list>
+</ion-content>
+</ion-view>

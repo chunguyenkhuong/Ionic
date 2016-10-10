@@ -1,0 +1,27 @@
+﻿<ion-view view-title="Camera">
+    <ion-content>
+        <div class="row">
+            <div class="col col-50">
+                <button class="button centered" ng-click="takePicture()">Take Picture</button>
+            </div>
+            <div class="col col-50">
+                <button class="button centered" ng-click="takePictureGallery()">Open Gallery</button>
+            </div>
+        </div>
+        <div ng-if="image == null">
+          <img style="width: 100%; height: 600px;" src="img/placeholder.png"/>
+
+        </div>
+        <div ng-if="image !== null">
+            <img class="maxWidth" ng-src="{{image}}" />
+            <form ng-submit="submit()">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Caption</span>
+                    <input type="text" name="username" placeholder="enter caption" ng-model="data.comment">
+                </label>
+
+                <input class="button button-block button-positive" type="submit" name="submit" value="Share">
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,82 @@
+<ion-view>
+   
+<ion-nav-buttons side="left">
+  <button class="button button-assertive" ng-click="signout()">Signout</button>
+</ion-nav-buttons>
+
+  
+
+<ion-nav-buttons side="right">
+  <button class="button button-icon icon ion-ios-cog" ng-click="doSomething()"></button>
+</ion-nav-buttons>
+<ion-nav-title>
+        <p class="red text-center">{{profile.username}}</p>
+</ion-nav-title>
+
+<ion-content>
+    <div class="row item">
+        <div class="item-avatar profileavatar col col-xs-3">
+           <img ng-src="{{profile.profile_img}}">
+        </div>
+        <div class="col col-xs-9">
+        <div class="row">
+            <div class="col col-xs-3">
+                <p class="text-center"><b class="red">2</b><br>
+                Posts</p>
+            </div>
+            <div class="col col-xs-3">
+                <p class="text-center"><b class="red">8</b><br>
+                Followers</p>
+             </div>
+            <div class="col col-xs-3">
+                <p class="text-center"><b class="red">2</b><br>
+                Following</p>
+             </div>
+        </div>
+        <button class="button button-assertive profilebutton" ng-click="doSomething()">Edit Profile</button>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col col-50">
+        <button class="button button-icon icon ion-grid centered" ng-click="value=1"></button>
+    </div>
+    <div class="col col-50">
+        <button class="button button-icon icon ion-ios-list-outline centered" ng-click="value=0"></button>
+    </div>
+    </div>
+    <div ng-init="value=1">
+        <div ng-if="value==1">
+            <div ng-repeat="picture in pictures" ng-if="$index % 3 == 0" class="row">
+                <div class="col col-33">
+                    <img ng-src="{{pictures[$index]}}" class="searchpics"><br />
+
+                </div>
+                <div class="col col-33">
+                    <img ng-src="{{pictures[$index + 1]}}" class="searchpics"><br />
+
+                </div>
+                <div class="col col-33">
+                    <img ng-src="{{pictures[$index + 2]}}" class="searchpics"><br />
+
+                </div>
+            </div>
+        </div>
+        <div ng-if="value==0">
+            <div ng-repeat="post in posts">
+                <img ng-src="{{post.pic}}" class="postpic">
+                <p class="comments">{{post.comment}}</p>
+                
+                <div class="socialbutton">
+                    <a class="button button-icon icon ion-ios-heart-outline "></a>
+                    <a class="button button-icon icon ion-ios-chatbubble-outline"></a>
+                    <a class="button button-icon icon ion-ios-redo-outline"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</ion-content>
+
+</ion-view>

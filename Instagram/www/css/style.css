@@ -1,0 +1,82 @@
+﻿/*General CSS*/
+.centered{
+    margin: auto;
+    display: block;
+}
+.margined{
+    margin: 10px;
+    display: block;
+}
+.red{
+    color: indianred !important;
+}
+
+/*Home CSS*/
+.logo{
+    width: 150px;
+    height: 40px;
+    display: block;
+    margin: auto;
+}
+.postpic{
+   margin: 10px 0 10px 0;
+   width:100%;
+   min-height: 350px !important;
+}
+.users {
+    background-color: indianred;
+}
+.users p{
+    margin-top: 10px !important;
+    color: white !important;
+}
+.socialbutton{
+    text-align: center;
+    margin-top: 10px;
+}
+.comments{
+    font-size: 20px !important;
+    text-align: center;
+    color: indianred !important;
+}
+.follow {
+    float: right;
+    margin-top: -30px;
+}
+
+/*Search CSS*/
+.search{
+    border-radius: 8px;
+    width: 100%;
+    height: 30px;
+    margin: 5px auto;
+    background-color: snow;
+}
+.search input{
+    color: indianred;
+}
+
+.searchpics{
+     width:100%;
+     height:300px;
+     display: block;
+}
+.stories {
+    border-style: none !important;
+}
+.stories img{
+    left: 32px !important;
+}
+/*profile css*/
+.profilebutton{
+    width: 100%;
+}
+.profileavatar img{
+    max-height: 100px !important;
+    max-width: 100px!important;
+    border: groove indianred;
+}
+/*camera css*/
+.maxWidth{
+    width: 100%
+}

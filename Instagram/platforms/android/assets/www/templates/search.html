@@ -1,0 +1,30 @@
+<ion-view>
+    <ion-nav-title>
+       <label class="item item-input search">
+            <i class="icon ion-ios-search"></i>
+          <input type="text" placeholder="Search">
+        </label>
+    </ion-nav-title>
+  <ion-content>
+    <ion-list>
+       <div>
+        <p class="margined red">Suggested Stories:</p>
+         <div ng-repeat="picture in pictures" ng-if="$index % 3 == 0" class="row">
+          <div class="col col-33 item item-avatar stories"><img ng-src="{{pictures[$index]}}" class=""></div>
+          <div class="col col-33 item item-avatar stories"><img ng-src="{{pictures[$index + 1]}}" class=""></div>
+          <div class="col col-33 item item-avatar stories"><img ng-src="{{pictures[$index + 2]}}" class=""></div>
+        </div>
+       </div>
+       <div>
+        <p class="margined red">Explore Posts:</p>
+         <div ng-repeat="picture in pictures" ng-if="$index % 3 == 0" class="row">
+           <div class="col col-33"><img ng-src="{{pictures[$index]}}" class="searchpics"></div>
+           <div class="col col-33"><img ng-src="{{pictures[$index + 1]}}" class="searchpics"></div>
+           <div class="col col-33"><img ng-src="{{pictures[$index + 2]}}" class="searchpics"></div>
+         </div>
+       </div>
+       
+       
+    </ion-list>
+  </ion-content>
+</ion-view>
