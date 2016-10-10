@@ -85,7 +85,8 @@ angular.module('starter.controllers', [])
         Camera.getPicture(options).then(function (imageData) {
             console.warn(imageData);
             alert(imageData);
-            $scope.image = imageData;
+            $scope.image = 'data:image/png;base64,' + imageData;
+            console.warn($scope.image)
             Pictures.addImg($scope.image);
         }, function (err) {
             console.log(err);
@@ -104,7 +105,8 @@ angular.module('starter.controllers', [])
         Camera.getPicture(options).then(function (imageData) {
             alert(imageData);
             console.warn(imageData);
-            $scope.image = imageData;
+            $scope.image = 'data:image/png;base64,' + imageData;
+            console.warn($scope.image)
             Pictures.addImg($scope.image);
         }, function (err) {
            console.log(err);
