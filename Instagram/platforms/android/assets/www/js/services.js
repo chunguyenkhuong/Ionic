@@ -148,7 +148,7 @@ angular.module('starter.services', [])
 
             var link = 'http://khuongstagram.herokuapp.com/posts/create';
 
-            $http.post(link, { post_user_id: profile.id, caption: comment,image:imgae }).then(function (res) {
+            $http.post(link, { post_user_id: profile.id, caption: comment,image:image }).then(function (res) {
                 if (res.data == false) {
                     deferred.reject('Something went wrong.');
                 }
