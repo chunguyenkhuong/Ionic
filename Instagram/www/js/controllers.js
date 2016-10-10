@@ -1,10 +1,24 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function ($scope, Posts) {
-    $scope.posts = Posts.all();
-    $scope.like = true;
-    
+.controller('HomeCtrl', function ($rootScope,$scope, Posts) {
 
+    var load = function () {
+        Posts.allFromServer().success(function (data) {
+            $scope.posts = data;
+            $scope.like = true;
+        }).error(function (data) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Load post failed!',
+                template: 'Something went wrong!'
+            });
+        });
+    }
+    
+    load();
+
+    $rootScope.$on('reload', function () {
+        load();
+    });
 })
 .controller('LikeCtrl', function ($scope, Posts) {
     $scope.posts = Posts.all();
@@ -28,7 +42,7 @@ angular.module('starter.controllers', [])
     $scope.pictures = Pictures.all();
     $scope.posts = Posts.all();
     $scope.like = true;
-    $rootScope.$on('reload_profile', function () {
+    $rootScope.$on('reload', function () {
         $scope.profile = Profile.getProfile();        
     });
     $scope.toggleLike = function () {
@@ -39,16 +53,23 @@ angular.module('starter.controllers', [])
         $state.go('login');
     }
 })
-.controller('CameraCtrl', function ($scope, Camera, Pictures, Posts, Profile, $state) {
+.controller('CameraCtrl', function ($rootScope,$scope, Camera, Pictures, Posts, Profile, $state) {
     $scope.image = null;
 
     $scope.data = {};
 
     $scope.submit = function () {
-        Posts.addPost(Profile.getProfile(), $scope.data.comment, $scope.image);
-        $scope.image = null;
-        $scope.data = {};
-        $state.go('tab.home');
+        Posts.addPostToServer(Profile.getProfile(), $scope.data.comment, $scope.image).success(function (data) {
+            $scope.image = null;
+            $scope.data = {};
+            $rootScope.$broadcast('reload');
+            $state.go('tab.home');
+        }).error(function (data) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Create failed!',
+                template: 'Something went wrong!'
+            });
+        });       
     };
 
     $scope.takePicture = function (options) {
@@ -57,7 +78,7 @@ angular.module('starter.controllers', [])
             quality: 75,
             targetWidth: 200,
             targetHeight: 200,
-            destinationType:1,
+            destinationType:0,
             sourceType: 1
         };
 
@@ -76,7 +97,7 @@ angular.module('starter.controllers', [])
             quality: 75,
             targetWidth: 200,
             targetHeight: 200,
-            destinationType: 1,
+            destinationType: 0,
             sourceType: 0
         };
 
@@ -96,7 +117,7 @@ angular.module('starter.controllers', [])
 
     $scope.login = function () {
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function (data) {            
-            $rootScope.$broadcast('reload_profile');
+            $rootScope.$broadcast('reload');
             $state.go('tab.home');
             $scope.data = {};
         }).error(function (data) {
@@ -120,7 +141,7 @@ angular.module('starter.controllers', [])
 
     $scope.create = function () {
         SignupService.createUser($scope.data).success(function (data) {
-            $rootScope.$broadcast('reload_profile');
+            $rootScope.$broadcast('reload');
             $state.go('tab.home');
             $scope.data = {};
         }).error(function (data) {

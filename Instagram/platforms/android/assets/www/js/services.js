@@ -74,7 +74,7 @@ angular.module('starter.services', [])
         }
     }
 })
-.factory('Posts', function () {
+.factory('Posts', function ($q, $http) {
 
     
 
@@ -106,6 +106,33 @@ angular.module('starter.services', [])
         all: function () {
             return posts;
         },
+        allFromServer() {
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+
+            var link = 'http://khuongstagram.herokuapp.com/posts/';
+
+            $http.get(link, {}).then(function (res) {
+                if (res.data == false) {
+                    deferred.reject('Something went wrong.');
+                }
+                else {
+                    posts = res.data;
+                    deferred.resolve(posts);
+                }
+            });
+
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
         addPost: function (profile, comment,image) {
             posts.unshift({
              
@@ -114,6 +141,32 @@ angular.module('starter.services', [])
                 face: profile.face,
                 pic: image
             });
+        },
+        addPostToServer: function (profile, comment, image) {
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+
+            var link = 'http://khuongstagram.herokuapp.com/posts/create';
+
+            $http.post(link, { post_user_id: profile.id, caption: comment,image:'2222' }).then(function (res) {
+                if (res.data == false) {
+                    deferred.reject('Something went wrong.');
+                }
+                else {                    
+                    deferred.resolve('Welcome ' + name + '!');
+                }
+            });
+
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
         },
     };
 })
