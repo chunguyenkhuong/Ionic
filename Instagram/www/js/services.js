@@ -118,7 +118,6 @@ angular.module('starter.services', [])
                 }
                 else {
                     posts = res.data;
-                    console.warn(posts);
                     deferred.resolve(posts);
                 }
             });
@@ -146,7 +145,7 @@ angular.module('starter.services', [])
         addPostToServer: function (profile, comment, image,tag) {
             var deferred = $q.defer();
             var promise = deferred.promise;
-
+            console.warn(tag);
             var link = 'http://khuongstagram.herokuapp.com/posts/create';
 
             $http.post(link, { post_user_id: profile.id, caption: comment,image:image,tag:tag }).then(function (res) {
@@ -174,6 +173,34 @@ angular.module('starter.services', [])
             var promise = deferred.promise;
 
             var link = 'http://khuongstagram.herokuapp.com/posts/'+username;
+
+            $http.get(link).then(function (res) {
+                if (res.data == false) {
+                    deferred.reject('Something went wrong.');
+                }
+                else {
+                    posts = res.data;
+                    deferred.resolve(posts);
+                }
+            });
+
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
+        searchPostByTag: function (tag) {
+            console.warn(tag);
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+
+            var link = 'http://khuongstagram.herokuapp.com/posts/tag/' + tag;
 
             $http.get(link).then(function (res) {
                 if (res.data == false) {

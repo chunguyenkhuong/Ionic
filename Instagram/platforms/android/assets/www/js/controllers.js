@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function ($rootScope,$scope, Posts) {
+.controller('HomeCtrl', function ($rootScope, $scope, Posts, $state, $ionicPopup) {
 
     var load = function () {
         Posts.allFromServer().success(function (data) {
@@ -17,7 +17,7 @@ angular.module('starter.controllers', [])
     load();
 
     $scope.searchByTag = function (tag) {
-        alert('This will go to search page to search with tag. Will come later');
+        $state.go('tab.search', { tag: tag }, { reload: true });
     }
 
     $rootScope.$on('reload', function () {
@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('SearchesCtrl', function ($scope, Pictures, Posts) {
+.controller('SearchesCtrl', function ($scope, Pictures, Posts, $state, $ionicPopup) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -38,18 +38,42 @@ angular.module('starter.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
-    $scope.pictures = Pictures.all();
-    $scope.data = {};
+    $scope.$on('$ionicView.beforeEnter', function () {
+        $scope.data = {};
+        if ($state.params.tag !== null)
+        {
+            $scope.data.search_value = '#' + $state.params.tag;
+        }
+    });
 
+    $scope.pictures = Pictures.all();
+    
+    
     $scope.search = function () {
-        Posts.searchPostByUsername($scope.data.username).success(function (data) {
-            $scope.posts = data;
-        }).error(function (data) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'Load post failed!',
-                template: 'Something went wrong!'
+
+        if($scope.data.search_value != null && $scope.data.search_value.charAt(0) == '#')
+        {
+            Posts.searchPostByTag($scope.data.search_value.slice(1)).success(function (data) {
+                $scope.posts = data;
+            }).error(function (data) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Load post failed!',
+                    template: 'Something went wrong!'
+                });
             });
-        });
+        }
+        else
+        {
+            Posts.searchPostByUsername($scope.data.search_value).success(function (data) {
+                $scope.posts = data;
+            }).error(function (data) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Load post failed!',
+                    template: 'Something went wrong!'
+                });
+            });
+        }
+        
     }
 
 })

@@ -1,7 +1,7 @@
 <ion-view>
     <ion-nav-title>
        <label class="item item-input search">          
-          <input type="text" placeholder="Search" ng-model="data.username">
+          <input type="text" placeholder="Search" ng-model="data.search_value">
         </label>
     </ion-nav-title>
     <ion-nav-buttons side="right">
@@ -17,7 +17,7 @@
                </div>
                <img ng-src="{{post.image}}" class="postpic">
                <p class="comments">{{post.caption}}</p>
-
+               <p ng-if="post.tag != null" class="comments"><a ng-click="searchByTag(post.tag)">#{{post.tag}}</a></p>
                <div class="socialbutton">
                    <a class="button button-icon icon ion-ios-heart-outline"></a>
                    <a class="button button-icon icon ion-ios-chatbubble-outline"></a>

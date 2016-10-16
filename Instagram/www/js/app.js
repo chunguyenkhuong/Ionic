@@ -87,6 +87,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   .state('tab.search', {
       url: '/search',
+      reload: true,
+      params: {
+          tag: null
+      },
       views: {
         'search': {
           templateUrl: 'templates/search.html',
