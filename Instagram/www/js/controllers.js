@@ -16,6 +16,10 @@ angular.module('starter.controllers', [])
     
     load();
 
+    $scope.searchByTag = function (tag) {
+        alert('This will go to search page to search with tag. Will come later');
+    }
+
     $rootScope.$on('reload', function () {
         load();
     });
@@ -25,7 +29,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('SearchesCtrl', function ($scope, Pictures) {
+.controller('SearchesCtrl', function ($scope, Pictures, Posts) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -35,6 +39,18 @@ angular.module('starter.controllers', [])
     //});
 
     $scope.pictures = Pictures.all();
+    $scope.data = {};
+
+    $scope.search = function () {
+        Posts.searchPostByUsername($scope.data.username).success(function (data) {
+            $scope.posts = data;
+        }).error(function (data) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Load post failed!',
+                template: 'Something went wrong!'
+            });
+        });
+    }
 
 })
 .controller('ProfileCtrl', function ($rootScope,$scope, Pictures, Profile, Posts, Camera, $state) {
@@ -59,7 +75,7 @@ angular.module('starter.controllers', [])
     $scope.data = {};
 
     $scope.submit = function () {
-        Posts.addPostToServer(Profile.getProfile(), $scope.data.comment, $scope.image).success(function (data) {
+        Posts.addPostToServer(Profile.getProfile(), $scope.data.comment, $scope.image, $scope.tag).success(function (data) {
             $scope.image = null;
             $scope.data = {};
             $rootScope.$broadcast('reload');
