@@ -75,7 +75,7 @@ angular.module('starter.controllers', [])
     $scope.data = {};
 
     $scope.submit = function () {
-        Posts.addPostToServer(Profile.getProfile(), $scope.data.comment, $scope.image, $scope.tag).success(function (data) {
+        Posts.addPostToServer(Profile.getProfile(), $scope.data.comment, $scope.image, $scope.data.tag).success(function (data) {
             $scope.image = null;
             $scope.data = {};
             $rootScope.$broadcast('reload');
